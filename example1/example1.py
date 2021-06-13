@@ -28,14 +28,14 @@ d) Previous case are all about GET method. Now, the frontend pass a message ans 
     and press "submit". the add.html will direct backend to url /api/v1/resources/books/add
     which shows backend the database after adding a book in it.
 Method:
-a) if methods = "POST", all methods about the request needs to add suffix "form"
+a) if methods = "POST", all methods related to the "request" needs to add suffix "form"
     ex : when I need to get the information passed from urls(GET) or body(POST),
     if methods = "GET": args = request.form.get("args")
     if methods = "POST": args = request.get("args")
 b) To get information from body, we have two methods(take POST as example)
     (1) args = request.form.get("args")
     (2) args = request.form["args"]
-    the difference between (1) and (2) is :
+    both (1) and (2) share the same result, but the difference between them is:
     (1) if args doesn't in the body, variable args will take null instead of 
         raising error, and the function will still return 
     (2) if "args" doesn't in the body, Error will be raised because of missing
