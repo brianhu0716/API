@@ -110,7 +110,7 @@ def api_id():
     127.0.0.1:5000/api/v1/resources/books?id=3
     '''
 # part4
-@app.route("/api/v1/resources/books/add", methods = ["POST"])
+@app.route("/api/v1/resources/books/add", methods = ["GET"])
 def add():
     if request.method == 'POST':
         ID = request.form.get('id')
@@ -129,12 +129,19 @@ def add():
         return jsonify(books)
     
     else:
-        id = request.args.get('id')
+        ID = request.args.get('id')
         title = request.args.get("title")
         author = request.args.get("author")
         first_sentence = request.args.get("first_sentence")
         published = request.args.get("published")
-        return "I am GET"
+        
+        books.append(dict())
+        books[-1]["id"] = ID
+        books[-1]["title"] = title
+        books[-1]["author"] = author
+        books[-1]["first_sentence"] = first_sentence
+        books[-1]["published"] = published
+        return jsonify(books)
     
     
 if __name__ == "__main__":
