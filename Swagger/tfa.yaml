@@ -1,0 +1,448 @@
+swagger: "2.0"
+
+info:
+  title: AIE Analytic Platform API
+  description: AIE Analytic Platform API Document
+  version: 1.0.0
+  contact:
+    email: felix.hsiao@aie-tec.com
+
+host: 127.0.0.1:32000
+basePath: /api/v1
+schemes:
+- https
+- http
+
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+parameters:
+  workdirParam:  # <-- Arbitrary name for the definition that will be used to refer to it.
+                 # Not necessarily the same as the parameter name.
+    in: query
+    name: workdir
+    type: string
+    required: true
+    allowEmptyValue: false
+    description: working directory
+
+  tableParam:
+    in: query
+    name: table
+    type: string
+    required: true
+    allowEmptyValue: false
+    description: user specified table name, the table name is used as saved file name
+
+  src_tableParam:
+    in: query
+    name: input_table
+    type: string
+    required: true
+    allowEmptyValue: false
+    description: input table, used to read data
+
+  tgt_tableParam:
+    in: query
+    name: tgt_table
+    type: string
+    required: true
+    allowEmptyValue: false
+    description: output table, used to write data
+
+  extParam:
+    in: query
+    name: ext
+    type: string
+    enum: [csv, json, parquet, pickle]
+    default: csv
+    required: true
+    allowEmptyValue: false
+    description: user specified table name, the table name is used as saved file name
+
+
+tags:
+  - name: DataPreprocess
+    description: Data preprocess collections
+  - name: FeatureEngineering
+    description: Feature Engineering
+    
+
+paths:
+  /preprocess/tfa/fft:
+    get:
+      tags:
+        - DataPreprocess
+      summary: Get xgboost result
+      description: Get xgboost fitted result and summary
+      operationId: get_clf_xgboost
+      parameters:
+        - $ref: '#/parameters/workdirParam'
+        - $ref: '#/parameters/tableParam'
+        - $ref: '#/parameters/extParam'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ObjectOfObject'
+    post:
+      tags:
+        - DataPreprocess
+      parameters:
+        - in: body
+          name: payload
+          required: True
+          schema:
+            $ref: '#/definitions/FFTRequestBody'
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ReturnMessage'
+    delete:
+      tags:
+        - DataPreprocess
+      summary: Delete FFT result
+      description: Delete FFT result and summary
+      parameters:
+        - $ref: '#/parameters/workdirParam'
+        - $ref: '#/parameters/tableParam'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ReturnMessage'
+        404:
+          description: Not Found
+      
+  /preprocess/tfa/dwt:
+    get:
+      tags: 
+        - DataPreProcess
+      parameters:
+        - $ref: '#/parameters/workdirParam'
+        - $ref: '#/parameters/tableParam'
+        - $ref: '#/parameters/extParam'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ObjectOfObject'
+    post:
+      tags: 
+        - DataPreprocess
+      #summary
+      #description: 
+      parameters:
+        - in: body
+          name: payload
+          schema:
+            $ref: '#/definitions/DWTRequestBody'
+      responses:
+        200:
+          description: OK
+          schema: 
+            $ref: '#/definitions/ReturnMessage' 
+    delete:
+      tags: 
+        - DataPreprocess
+      summary: Delete DWT result
+      description: Delete DWT result and summary
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ReturnMessage'
+        404:
+          description: Not Found
+          
+  /preprocess/tfa/cwt:
+    get:
+      tags:
+        - DataPreprocess
+      parameters:
+        - $ref: '#/parameters/workdirParam'
+        - $ref: '#/parameters/tableParam'
+        - $ref: '#/parameters/extParam'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ReturnMessage'
+    post:
+      tags:
+        - DataPreprocess
+      parameters:
+        - in: body
+          name: payload
+          required: True
+          schema:
+            $ref: '/definitions/CWTResultBody'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ReturnMessage'
+    delete:
+      tags:
+        - DataPreprocess
+      summary: Delete CWT result
+      description: Delete CWT result and summary
+      responses:
+        200:
+          description: OK
+          schema: 
+            $ref: '#/definitions/ReturnMessage'
+        404:
+          description: Not Found
+      
+  /preprocess/tfa/eemd:
+    get:
+      tags:
+        - DataPreprocess
+      parameters:
+        - $ref: '#/parameters/workdirParam'
+        - $ref: '#/parameters/tableParam'
+        - $ref: '#/parameters/extParam'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ReturnMessage'
+    post:
+      tags:
+        - DataPreprocess
+      parameters:
+        - in: body
+          name: payload
+          required: True
+          schema:
+            $ref: '#/definitions/EEMDRequestBody'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ReturnMessage'
+        404:
+          description: Not Found
+      
+        
+  
+
+
+#########################################################################
+  
+definitions:
+  Message:
+    type: string
+    example: Success
+    description: return message
+  
+  ReturnMessage:
+    type: object
+    description: return message
+    required:
+      - message
+    properties:
+      message:
+        $ref: '#/definitions/Message'
+    
+  FileExtension:
+    type: string
+    enum: [csv, json, parquet, pickle]
+    default: csv
+    description: file extension
+  
+  RequestBodyTwoTable:
+    type: object
+    required:
+      - workdir
+      - src_table
+      - tgt_table
+      - ext
+    properties:
+      workdir:
+        type: string
+        description: working directory
+      src_table:
+        type: string
+        description: raw data input file name (table name)
+      tgt_table:
+        type: string
+        description: raw data output file name (table name)
+      ext:
+        $ref: '#/definitions/FileExtension'
+  
+  ObjectOfObject:
+    type: object
+    description: json format in data
+    required:
+      - data
+      - message
+    properties:
+      message:
+        $ref: '#/definitions/Message'
+      data:
+        type: object
+        example:
+          user_id:
+            - 1
+            - 2
+          user_name:
+            - a
+            - b
+        
+
+  ArrayOfData:
+    type: array
+    description: input array
+    items: 
+      type: number
+    example:
+      - num1
+      - num2
+          
+  # ArrayOfString:
+  #   type: array
+  #   items:
+  #     type: string
+  #   example:
+  #     - item_1
+  #     - item_2
+      
+  ArrayOfTime:
+    type: array
+    description: >
+      specifying signal time interval
+      if 
+    items:
+      type: number
+    example:
+      - t1
+        t2
+        ...
+  # ArrayOfFrequency:
+  #   type: array
+  #   #description: 
+  #   items: 
+  #     type: number
+  #   example:
+  #     - f1
+  #       f2
+  #       ...
+  SamplingFrequency:
+    type: number
+    description: sampling frequency
+    example: 20.6
+        
+  FFTRequestBody:
+    type: object
+    description: call fft funcion and return result
+    required:
+      - file_info
+      - parameters
+    properties:
+      file_info:
+        $ref: '#/definitions/RequestBodyTwoTable'
+      parameters:
+        type: object
+        required:
+          - data
+          - fs
+        properties:
+          data: 
+            $ref: '#/definitions/ArrayOfData'
+          fs:
+            $ref: '#/definitions/SamplingFrequency'
+
+            
+  DWTRequestBody:
+    type: object
+    description: call dwt function and return result
+    required:
+      - file_info
+      - parameters
+    properties:
+      file_info:
+        $ref: '#/definitions/RequestBodyTwoTable'
+      parameters:
+        required:
+          - data
+          - time
+        properties:
+          data:
+            $ref: '#/definitions/ArrayOfData'
+          time:
+            $ref: '#/definitions/ArrayOfTime'
+          level:
+            type: integer
+            description: specify the decomposition level of dwt
+            example: 2
+            default: null
+          wavename:
+            type: string
+            example: db4
+            default: null
+  
+  CWTRequestBody:
+    type: object
+    required:
+      - file_info
+      - parameters
+    properties:
+      file_info:
+        $ref: '#/definitions/RequestBodyTwoTable'
+      parameters:
+        required:
+          - data
+          - fs
+          - time
+        properties:
+          data:
+            $ref: '#/definitions/ArrayOfData'
+          fs:
+            $ref: '#/definitions/SamplingFrequency'
+          time:
+            $ref: '#/definitions/ArrayOfTime'
+          wavename:
+            type: string
+            example: 'morl'
+            default: null
+             
+  EEMDRequestBody:
+    type: object
+    required:
+      - file_info
+      - parameters
+    properties:
+      file_info:
+        $ref: '#/definitions/RequestBodyTwoTable'
+      parameters:
+        required:
+          - data
+          - time
+        properties:
+          data:
+            $ref: '#/definitions/ArrayOfData'
+          time:
+            $ref: '#/definitions/ArrayOfTime'
+          NE:
+            type: integer
+            description: >
+              specify the ensemble times, recommanded values is at least 50 
+            example: 50
+            default: null
+          NSTD: 
+            type: number
+            description: >
+              specify the noise standard deviation, recommanded value is in the range [0,1]
+            example: 0.4
+            default: null
+        
+          
+      
