@@ -77,9 +77,8 @@ paths:
     get:
       tags:
         - DataPreprocess
-      summary: Get xgboost result
-      description: Get xgboost fitted result and summary
-      operationId: get_clf_xgboost
+      summary: Get FFT result
+      operationId: get_fft
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
@@ -92,6 +91,8 @@ paths:
     post:
       tags:
         - DataPreprocess
+      summary: Apply fast fourier transform on signal and get result
+      operationId: tfa_fft
       parameters:
         - in: body
           name: payload
@@ -109,6 +110,7 @@ paths:
         - DataPreprocess
       summary: Delete FFT result
       description: Delete FFT result and summary
+      operationId: delete_fft
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
@@ -123,7 +125,9 @@ paths:
   /preprocess/tfa/dwt:
     get:
       tags: 
-        - DataPreProcess
+        - DataPreprocess
+      summary: Get DWT result
+      operationId: get_dwt
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
@@ -136,8 +140,8 @@ paths:
     post:
       tags: 
         - DataPreprocess
-      #summary
-      #description: 
+      summary: Apply discrete wavelet transform on signal 
+      operationId: tfa_dwt
       parameters:
         - in: body
           name: payload
@@ -153,6 +157,10 @@ paths:
         - DataPreprocess
       summary: Delete DWT result
       description: Delete DWT result and summary
+      operationId: delete_dwt
+      parameters:
+        - $ref: '#/parameters/workdirParam'
+        - $ref: '#/parameters/tableParam'
       responses:
         200:
           description: OK
@@ -165,6 +173,8 @@ paths:
     get:
       tags:
         - DataPreprocess
+      summary: Get CWT Result
+      operationId: get_cwt
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
@@ -177,12 +187,14 @@ paths:
     post:
       tags:
         - DataPreprocess
+      summary: Apply continuous wavelet transform on signal
+      operationId: tfa_cwt
       parameters:
         - in: body
           name: payload
           required: True
           schema:
-            $ref: '/definitions/CWTResultBody'
+            $ref: '/definitions/CWTRequestBody'
       responses:
         200:
           description: OK
@@ -193,6 +205,10 @@ paths:
         - DataPreprocess
       summary: Delete CWT result
       description: Delete CWT result and summary
+      operationId: delete_cwt
+      parameters:
+        - $ref: '#/parameters/workdirParam'
+        - $ref: '#/parameters/tableParam'
       responses:
         200:
           description: OK
@@ -205,6 +221,8 @@ paths:
     get:
       tags:
         - DataPreprocess
+      summary: Get EEMD result
+      operationId: get_eemd
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
@@ -217,6 +235,8 @@ paths:
     post:
       tags:
         - DataPreprocess
+      summary: tfa_eemd
+      operationId: tfa_eemd
       parameters:
         - in: body
           name: payload
@@ -230,10 +250,23 @@ paths:
             $ref: '#/definitions/ReturnMessage'
         404:
           description: Not Found
+    delete:
+      tags:
+        - DataPreprocess
+      description: Delete EEMD result
+      summary: Delete EEMD result and summary
+      operationId: delete_eemd
+      parameters:
+        - $ref: '#/parameters/workdirParam'
+        - $ref: '#/parameters/tableParam'
       
-        
-  
-
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ReturnMessage'
+        404:
+          description: Not Found
 
 #########################################################################
   
