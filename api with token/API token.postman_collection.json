@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "7b4d8837-a72a-424d-90ce-2916416ccc96",
+		"name": "API token",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign Up",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"AlvinChang\",\r\n    \"password\": 1111\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/signup/token",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"signup",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log In",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyNDI4MTM3NSwianRpIjoiM2M2OTU0ZDYtYjZlOS00ZTgwLTgyZjEtYzMzZjNiYThlZjY1IiwibmJmIjoxNjI0MjgxMzc1LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiQWx2aW5DaGFuZyIsImV4cCI6MTYyNDI4MjI3NX0.2dl9pLpF4o_gdLph_DZedrfXN-aonhlqBmfP6iCNxgY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"AlvinChang\",  \r\n    \"password\": 1111\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/login/token",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"login",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

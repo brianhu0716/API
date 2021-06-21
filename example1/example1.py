@@ -9,7 +9,7 @@ website : https://programminghistorian.org/en/lessons/creating-apis-with-python-
 """
 review:
 Function:
-a) I am backend in this case, any request from url are is from frontend.
+a) I am backend in this case, any request passed by url are is from frontend.
     It means that I hold the database and can return data whatever passed
     from url request.
 b) in part2:
