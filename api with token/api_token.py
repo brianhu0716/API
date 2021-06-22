@@ -35,7 +35,11 @@ def SignUp():
 
 @app.route("/login/token", methods = ["POST"])
 @jwt_required() # check whether the post body includes the correct token or not 
-def LogIn():
+def JWT_protected():
+    current_user = get_jwt_identity()
+    return jsonify("Hello " + current_user)
+
+    '''
     try :
         payload = request.get_json()
         name = payload["user"]
@@ -52,7 +56,7 @@ def LogIn():
     
     except ValueError:
         return jsonify("Authorization failed")
-
+    '''
     
 if __name__ == "__main__":
     debug = True
