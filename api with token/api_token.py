@@ -34,29 +34,31 @@ def SignUp():
                     "user database: ": users})
 
 @app.route("/login/token", methods = ["POST"])
-@jwt_required() # check whether the post body includes the correct token or not 
+@jwt_required() 
+# the user identity is included in token, so we don't need to pass username or 
+# password again and the endpoint can decrypted token to get user's information 
+# directly without another database to store them
 def JWT_protected():
     current_user = get_jwt_identity()
     return jsonify("Hello " + current_user)
 
-    '''
-    try :
-        payload = request.get_json()
-        name = payload["user"]
-        password = payload["password"]
-        
-        #return jsonify(users)
-        
-        if name not in users:
-            return jsonify("you need to register first")
-            
-        if users[name] == password:
-            identity = get_jwt_identity() # decode the token to username
-            return jsonify("Hello " + identity)
+@app.route('/login/session', methods=["POST"])
+def Sesseion_protected():
+    payload = request.get_json()
+    name = payload["user"]
+    password = payload["password"]
     
-    except ValueError:
-        return jsonify("Authorization failed")
-    '''
+    if not name and not password:
+        return "invalid input string"
+    
+    if name not in users:
+        return jsonify("you need to register first")
+        
+    if users[name] == password:
+        return jsonify("Hello " + name)
+    return jsonify("Authentication Failed")
+    
+    
     
 if __name__ == "__main__":
     debug = True
