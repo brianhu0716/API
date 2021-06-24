@@ -110,7 +110,7 @@ def api_id():
     127.0.0.1:5000/api/v1/resources/books?id=3
     '''
 # part4
-@app.route("/api/v1/resources/books/add", methods = ["GET"])
+@app.route("/api/v1/resources/books/add", methods = ["GET", "POST"])
 def add():
     if request.method == 'POST':
         ID = request.form.get('id')
@@ -145,5 +145,5 @@ def add():
     
     
 if __name__ == "__main__":
-    
-    app.run(debug = True)
+    # debug = True
+    app.run()
