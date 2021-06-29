@@ -78,7 +78,7 @@ paths:
       tags:
         - DataPreprocess
       summary: Get FFT result
-      operationId: get_fft
+      operationId: get_tfa_fft
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
@@ -92,6 +92,7 @@ paths:
       tags:
         - DataPreprocess
       summary: Apply fast fourier transform on signal and get result
+      x-swagger-router-controller: tfa.api
       operationId: tfa_fft
       parameters:
         - in: body
@@ -110,7 +111,7 @@ paths:
         - DataPreprocess
       summary: Delete FFT result
       description: Delete FFT result and summary
-      operationId: delete_fft
+      operationId: delete_tfa_fft
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
@@ -122,153 +123,152 @@ paths:
         404:
           description: Not Found
       
-  /preprocess/tfa/dwt:
-    get:
-      tags: 
-        - DataPreprocess
-      summary: Get DWT result
-      operationId: get_dwt
-      parameters:
-        - $ref: '#/parameters/workdirParam'
-        - $ref: '#/parameters/tableParam'
-        - $ref: '#/parameters/extParam'
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/ObjectOfObject'
-    post:
-      tags: 
-        - DataPreprocess
-      summary: Apply discrete wavelet transform on signal 
-      operationId: tfa_dwt
-      parameters:
-        - in: body
-          name: payload
-          schema:
-            $ref: '#/definitions/DWTRequestBody'
-      responses:
-        200:
-          description: OK
-          schema: 
-            $ref: '#/definitions/ReturnMessage' 
-    delete:
-      tags: 
-        - DataPreprocess
-      summary: Delete DWT result
-      description: Delete DWT result and summary
-      operationId: delete_dwt
-      parameters:
-        - $ref: '#/parameters/workdirParam'
-        - $ref: '#/parameters/tableParam'
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/ReturnMessage'
-        404:
-          description: Not Found
+  # /preprocess/tfa/dwt:
+  #   get:
+  #     tags: 
+  #       - DataPreprocess
+  #     summary: Get DWT result
+  #     operationId: get_tfa_dwt
+  #     parameters:
+  #       - $ref: '#/parameters/workdirParam'
+  #       - $ref: '#/parameters/tableParam'
+  #       - $ref: '#/parameters/extParam'
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema:
+  #           $ref: '#/definitions/ObjectOfObject'
+  #   post:
+  #     tags: 
+  #       - DataPreprocess
+  #     summary: Apply discrete wavelet transform on signal 
+  #     operationId: tfa_dwt
+  #     parameters:
+  #       - in: body
+  #         name: payload
+  #         schema:
+  #           $ref: '#/definitions/DWTRequestBody'
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema: 
+  #           $ref: '#/definitions/ReturnMessage' 
+  #   delete:
+  #     tags: 
+  #       - DataPreprocess
+  #     summary: Delete DWT result
+  #     description: Delete DWT result and summary
+  #     operationId: delete_tfa_dwt
+  #     parameters:
+  #       - $ref: '#/parameters/workdirParam'
+  #       - $ref: '#/parameters/tableParam'
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema:
+  #           $ref: '#/definitions/ReturnMessage'
+  #       404:
+  #         description: Not Found
           
-  /preprocess/tfa/cwt:
-    get:
-      tags:
-        - DataPreprocess
-      summary: Get CWT Result
-      operationId: get_cwt
-      parameters:
-        - $ref: '#/parameters/workdirParam'
-        - $ref: '#/parameters/tableParam'
-        - $ref: '#/parameters/extParam'
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/ReturnMessage'
-    post:
-      tags:
-        - DataPreprocess
-      summary: Apply continuous wavelet transform on signal
-      operationId: tfa_cwt
-      parameters:
-        - in: body
-          name: payload
-          required: True
-          schema:
-            $ref: '/definitions/CWTRequestBody'
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/ReturnMessage'
-    delete:
-      tags:
-        - DataPreprocess
-      summary: Delete CWT result
-      description: Delete CWT result and summary
-      operationId: delete_cwt
-      parameters:
-        - $ref: '#/parameters/workdirParam'
-        - $ref: '#/parameters/tableParam'
-      responses:
-        200:
-          description: OK
-          schema: 
-            $ref: '#/definitions/ReturnMessage'
-        404:
-          description: Not Found
+  # /preprocess/tfa/cwt:
+  #   get:
+  #     tags:
+  #       - DataPreprocess
+  #     summary: Get CWT Result
+  #     operationId: get_tfa_cwt
+  #     parameters:
+  #       - $ref: '#/parameters/workdirParam'
+  #       - $ref: '#/parameters/tableParam'
+  #       - $ref: '#/parameters/extParam'
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema:
+  #           $ref: '#/definitions/ReturnMessage'
+  #   post:
+  #     tags:
+  #       - DataPreprocess
+  #     summary: Apply continuous wavelet transform on signal
+  #     operationId: tfa_cwt
+  #     parameters:
+  #       - in: body
+  #         name: payload
+  #         required: True
+  #         schema:
+  #           $ref: '#/definitions/CWTRequestBody'
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema:
+  #           $ref: '#/definitions/ReturnMessage'
+  #   delete:
+  #     tags:
+  #       - DataPreprocess
+  #     summary: Delete CWT result
+  #     description: Delete CWT result and summary
+  #     operationId: delete_tfa_cwt
+  #     parameters:
+  #       - $ref: '#/parameters/workdirParam'
+  #       - $ref: '#/parameters/tableParam'
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema: 
+  #           $ref: '#/definitions/ReturnMessage'
+  #       404:
+  #         description: Not Found
       
-  /preprocess/tfa/eemd:
-    get:
-      tags:
-        - DataPreprocess
-      summary: Get EEMD result
-      operationId: get_eemd
-      parameters:
-        - $ref: '#/parameters/workdirParam'
-        - $ref: '#/parameters/tableParam'
-        - $ref: '#/parameters/extParam'
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/ReturnMessage'
-    post:
-      tags:
-        - DataPreprocess
-      summary: tfa_eemd
-      operationId: tfa_eemd
-      parameters:
-        - in: body
-          name: payload
-          required: True
-          schema:
-            $ref: '#/definitions/EEMDRequestBody'
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/ReturnMessage'
-        404:
-          description: Not Found
-    delete:
-      tags:
-        - DataPreprocess
-      description: Delete EEMD result
-      summary: Delete EEMD result and summary
-      operationId: delete_eemd
-      parameters:
-        - $ref: '#/parameters/workdirParam'
-        - $ref: '#/parameters/tableParam'
+  # /preprocess/tfa/eemd:
+  #   get:
+  #     tags:
+  #       - DataPreprocess
+  #     summary: Get EEMD result
+  #     operationId: get_tfa_eemd
+  #     parameters:
+  #       - $ref: '#/parameters/workdirParam'
+  #       - $ref: '#/parameters/tableParam'
+  #       - $ref: '#/parameters/extParam'
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema:
+  #           $ref: '#/definitions/ReturnMessage'
+  #   post:
+  #     tags:
+  #       - DataPreprocess
+  #     summary: tfa_eemd
+  #     operationId: tfa_eemd
+  #     parameters:
+  #       - in: body
+  #         name: payload
+  #         required: True
+  #         schema:
+  #           $ref: '#/definitions/EEMDRequestBody'
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema:
+  #           $ref: '#/definitions/ReturnMessage'
+  #       404:
+  #         description: Not Found
+  #   delete:
+  #     tags:
+  #       - DataPreprocess
+  #     description: Delete EEMD result
+  #     summary: Delete EEMD result and summary
+  #     operationId: delete_tfa_eemd
+  #     parameters:
+  #       - $ref: '#/parameters/workdirParam'
+  #       - $ref: '#/parameters/tableParam'
       
-      responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/ReturnMessage'
-        404:
-          description: Not Found
+  #     responses:
+  #       200:
+  #         description: OK
+  #         schema:
+  #           $ref: '#/definitions/ReturnMessage'
+  #       404:
+  #         description: Not Found
 
-#########################################################################
   
 definitions:
   Message:
@@ -352,7 +352,6 @@ definitions:
     type: array
     description: >
       specifying signal time interval
-      if 
     items:
       type: number
     example:

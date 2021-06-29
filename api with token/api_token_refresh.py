@@ -51,6 +51,8 @@ def getdata():
     access_token = payload["access token"]
     info = decode(access_token, key, algorithm)
     limit = info["exp"]
+#    return jsonify({"limit": limit,
+#                   "now": to_integer(datetime.datetime.utcnow())})
     if to_integer(datetime.datetime.utcnow()) > limit:
         return jsonify("this token has expired, please log in again")
     else:
