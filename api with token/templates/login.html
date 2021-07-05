@@ -1,6 +1,8 @@
 <form method="post">
-	<input type="text" name="user" value="user">
-	<input type="number" name="password" value="password">
-	<input type="submit" name="send" value="submit">
+    <p>Enter user name:</p>
+    <p><input type = "text" placeholder = "user" name = "user" /></p>
+    <p>Enter password:</p>
+    <p><input type = "number" placeholder = "password" name = "password" /></p>
 	<input type="hidden" name="next" value="{{ request.args.get('next', '') }}"/>
+    <p><input type = "submit" name="send" value = "submit" /></p>
 </form>

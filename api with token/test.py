@@ -90,7 +90,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 '''
-/login (first sighn up):
+/login (sign up):
     return type: json
         {
   "access token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoia2VsbHkiLCJleHAiOjIwMjEwNjI4MTMyMzE3fQ.-pEB5aJyDDkWiguH3jz-nbXoQARlUl-OdbBy9-dz5iE"

@@ -78,7 +78,8 @@ paths:
       tags:
         - DataPreprocess
       summary: Get FFT result
-      operationId: get_tfa_fft
+      # operationId: get_tfa_fft
+      operationId: app.get_fft
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
@@ -92,8 +93,8 @@ paths:
       tags:
         - DataPreprocess
       summary: Apply fast fourier transform on signal and get result
-      x-swagger-router-controller: tfa.api
-      operationId: tfa_fft
+      # operationId: tfa_fft
+      operationId: app.fft
       parameters:
         - in: body
           name: payload
@@ -111,7 +112,8 @@ paths:
         - DataPreprocess
       summary: Delete FFT result
       description: Delete FFT result and summary
-      operationId: delete_tfa_fft
+      # operationId: delete_tfa_fft
+      operationId: app.del_fft
       parameters:
         - $ref: '#/parameters/workdirParam'
         - $ref: '#/parameters/tableParam'
